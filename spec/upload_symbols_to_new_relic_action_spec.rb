@@ -12,7 +12,7 @@ describe Fastlane do
       it "extracts zip files" do
         binary_path = './spec/fixtures/screenshots/screenshot1.png'
         dsym_path = './spec/fixtures/dSYM/Themoji.dSYM.zip'
-        
+
         expect(Fastlane::Actions).to receive(:sh).with("unzip -qo #{File.expand_path(dsym_path)}")
 
         Fastlane::FastFile.new.parse("lane :test do

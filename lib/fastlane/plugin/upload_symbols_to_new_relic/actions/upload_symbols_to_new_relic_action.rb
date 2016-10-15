@@ -3,7 +3,7 @@ module Fastlane
     class UploadSymbolsToNewRelicAction < Action
       def self.run(params)
         dsym_paths = get_all_dsym_paths(params)
-        
+
         if dsym_paths.count.zero?
           UI.error("Couldn't find any dSYMs, please pass them using the dsym_path option")
           return nil
@@ -31,7 +31,7 @@ module Fastlane
       def self.handle_dsym(params, current_path)
         if current_path.end_with?(".dSYM")
           dwarf_dump = Actions.sh("xcrun dwarfdump --uuid #{current_path}")
-          
+
           upload_dsym(params, current_path, dwarf_dump)
         elsif current_path.end_with?(".zip")
           UI.message("Extracting '#{current_path}'...")
