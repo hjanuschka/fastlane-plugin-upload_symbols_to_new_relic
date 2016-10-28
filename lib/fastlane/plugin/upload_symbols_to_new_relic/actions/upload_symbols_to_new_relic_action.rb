@@ -30,7 +30,7 @@ module Fastlane
       #   this might also be either nested or not, we're flexible
       def self.handle_dsym(params, current_path)
         if current_path.end_with?(".dSYM")
-          dwarf_dump = Actions.sh("xcrun dwarfdump --uuid #{current_path}")
+          dwarf_dump = Actions.sh("xcrun dwarfdump --uuid '#{current_path}'")
 
           upload_dsym(params, current_path, dwarf_dump)
         elsif current_path.end_with?(".zip")
