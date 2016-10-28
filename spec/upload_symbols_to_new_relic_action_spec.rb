@@ -28,7 +28,7 @@ describe Fastlane do
         binary_path = './spec/fixtures/screenshots/screenshot1.png'
         dsym_path = './spec/fixtures/dSYM/Themoji.dSYM'
 
-        expect(Fastlane::Actions).to receive(:sh).with("xcrun dwarfdump --uuid #{File.expand_path(dsym_path)}")
+        expect(Fastlane::Actions).to receive(:sh).with("xcrun dwarfdump --uuid '#{File.expand_path(dsym_path)}'")
 
         Fastlane::FastFile.new.parse("lane :test do
           upload_symbols_to_new_relic(
