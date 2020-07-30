@@ -55,7 +55,6 @@ module Fastlane
           return
         end
 
-        app_name = params[:new_relic_app_name]
         uploadable_lib_names = (params[:new_relic_upload_libs] || "").split(",")
         new_relic_key = params[:new_relic_license_key]
 
@@ -66,10 +65,9 @@ module Fastlane
         # otherwise, check that the lib+name from the dwarfdump is in our list
         puts "123123"
         if uploadable_lib_names.count.zero? || uploadable_lib_names.include?(lib_name)
-          build_ids = all_included_architecture_info.map { |info| info[:uuid] } .join(",")
           zip_file_name = "#{path}.zip"
           sh "zip --recurse-paths --quiet '#{zip_file_name}' '#{path}'"
-          sh "curl -F dsym=@'#{zip_file_name}' -F buildId='#{build_ids}' -F appName='#{app_name}' -H 'X-APP-LICENSE-KEY: #{new_relic_key}' https://mobile-symbol-upload.newrelic.com/symbol"
+          sh "curl -F dsym=@'#{zip_file_name}' -H 'X-APP-LICENSE-KEY: #{new_relic_key}' https://mobile-symbol-upload.newrelic.com/symbol"
         end
       end
 
@@ -100,13 +98,6 @@ module Fastlane
 
       def self.available_options
         [
-          FastlaneCore::ConfigItem.new(key: :new_relic_app_name,
-                                       env_name: "FL_UPLOAD_SYMBOLS_TO_NEW_RELIC_APP_NAME",
-                                       description: "The name of your app",
-                                       optional: false,
-                                       verify_block: proc do |value|
-                                         UI.user_error!("No app name for New Relic given, pass using `new_relic_app_name: 'app name'`") if value.to_s.length.zero?
-                                       end),
           FastlaneCore::ConfigItem.new(key: :new_relic_license_key,
                                        env_name: "FL_UPLOAD_SYMBOLS_TO_NEW_RELIC_LICENSE_KEY",
                                        description: "Your New Relic app license key",
