@@ -19,7 +19,6 @@ describe Fastlane do
           upload_symbols_to_new_relic(
             dsym_path: 'fastlane-plugin-upload_symbols_to_new_relic/#{dsym_path}',
             new_relic_license_key: 'something123',
-            new_relic_app_name: 'TestAppName',
             new_relic_upload_libs: 'TestAppName')
         end").runner.execute(:test)
       end
@@ -34,7 +33,6 @@ describe Fastlane do
           upload_symbols_to_new_relic(
             dsym_path: 'fastlane-plugin-upload_symbols_to_new_relic/#{dsym_path}',
             new_relic_license_key: 'something123',
-            new_relic_app_name: 'TestAppName',
             new_relic_upload_libs: 'todoappgame')
         end").runner.execute(:test)
       end
